@@ -12,18 +12,56 @@ const Jobs = () => {
     try {
       setLoading(true);
       
-      // Build query string
-      const queryParams = new URLSearchParams();
-      if (filters.search) queryParams.append('search', filters.search);
-      if (filters.type) queryParams.append('type', filters.type);
-      if (filters.category) queryParams.append('category', filters.category);
-      
-      const res = await api.get(`/jobs?${queryParams.toString()}`);
-      setJobs(res.data.data);
+      const mockJobs = [
+        {
+          _id: '1',
+          title: 'Senior Frontend Developer',
+          company: 'TechCorp Inc.',
+          location: 'Remote',
+          type: 'Full-time',
+          category: 'Software Engineering',
+          salary: { min: 120000, max: 150000, currency: 'USD' },
+          createdAt: new Date().toISOString()
+        },
+        {
+          _id: '2',
+          title: 'Backend Node.js Engineer',
+          company: 'StartupX',
+          location: 'New York, NY',
+          type: 'Full-time',
+          category: 'Software Engineering',
+          salary: { min: 100000, max: 130000, currency: 'USD' },
+          createdAt: new Date(Date.now() - 86400000 * 2).toISOString()
+        },
+        {
+          _id: '3',
+          title: 'Product Designer (UI/UX)',
+          company: 'Creative Solutions',
+          location: 'San Francisco, CA',
+          type: 'Contract',
+          category: 'Design',
+          salary: { min: 80000, max: 110000, currency: 'USD' },
+          createdAt: new Date(Date.now() - 86400000 * 4).toISOString()
+        },
+        {
+          _id: '4',
+          title: 'DevOps Specialist',
+          company: 'CloudNet Infrastructure',
+          location: 'Remote (Europe)',
+          type: 'Full-time',
+          category: 'Operations',
+          salary: { min: 90000, max: 120000, currency: 'EUR' },
+          createdAt: new Date(Date.now() - 86400000 * 5).toISOString()
+        }
+      ];
+
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      setJobs(mockJobs);
       setError(null);
     } catch (err) {
-      setError('Failed to fetch jobs. Please try again later.');
-      console.error(err);
+      setError('Failed to load mock jobs.');
     } finally {
       setLoading(false);
     }
